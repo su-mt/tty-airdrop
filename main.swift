@@ -6,8 +6,28 @@ let green = "\u{001B}[36m"
 let yellow = "\u{001B}[33m" 
 let reset = "\u{001B}[0m"
 
+func printHelp() {
+    print("""
+    \(yellow)Usage:\(reset) airdrop <file_path>
+
+    \(yellow)Options:\(reset)
+      -h, --help     Show this help message and exit
+
+    \(yellow)Example:\(reset)
+      airdrop ./example.pdf
+    """)
+}
+
+// Обработка аргументов
+let arguments = CommandLine.arguments
+
+if arguments.contains("-h") || arguments.contains("--help") {
+    printHelp()
+    exit(0)
+}
+
 guard CommandLine.arguments.count > 1 else {
-    print("\(yellow)Usage: airdrop <file>\(reset)")
+    print("\(yellow)Usage:\(reset) airdrop <file_path>\n       airdrop [-h | --help] show help")
     exit(1)
 }
 
