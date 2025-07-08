@@ -56,7 +56,7 @@ class AirDropDelegate: NSObject, NSApplicationDelegate, NSSharingServiceDelegate
 
         service.delegate = self
         service.perform(withItems: [fileURL])
-        print("\(green)AirDrop transfer started.\(reset)")
+        print("AirDrop transfer started.")
     }
 
     func sharingService(_ sharingService: NSSharingService, didShareItems items: [Any]) {
