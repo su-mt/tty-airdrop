@@ -16,35 +16,35 @@ guard FileManager.default.fileExists(atPath: filePath) else {
 
 class AirDropDelegate: NSObject, NSApplicationDelegate, NSSharingServiceDelegate {
     let fileURL: URL
+    var wasShared = false
 
     init(fileURL: URL) {
         self.fileURL = fileURL
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Получаем AirDrop-сервис
         guard let service = NSSharingService(named: .sendViaAirDrop) else {
-            print("AirDrop is unvailable.")
+            print("AirDrop is unavailable.")
             NSApp.terminate(nil)
             return
         }
 
         service.delegate = self
         service.perform(withItems: [fileURL])
+        print("AirDrop transfer started. Follow instructions in the AirDrop window.")
     }
 
     func sharingService(_ sharingService: NSSharingService, didShareItems items: [Any]) {
-
+        wasShared = true
         NSApp.terminate(nil)
     }
 
     func sharingService(_ sharingService: NSSharingService, didFailToShareItems items: [Any], error: Error) {
-        print("Sent Error: \(error.localizedDescription)")
+        print("Error: \(error.localizedDescription)")
         NSApp.terminate(nil)
     }
 
     func sharingServiceDidCancel(_ sharingService: NSSharingService) {
-        print("Cancel.")
         NSApp.terminate(nil)
     }
 }
