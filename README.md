@@ -17,6 +17,7 @@
 
 ```bash
 # Compiling
+
 swiftc main.swift -o airdrop -framework AppKit  
 
 # Move the compiled binary to a directory in your PATH
