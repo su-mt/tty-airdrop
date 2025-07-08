@@ -1,8 +1,13 @@
 import Foundation
 import AppKit
 
+let red = "\u{001B}[31m"
+let green = "\u{001B}[36m"
+let yellow = "\u{001B}[33m" 
+let reset = "\u{001B}[0m"
+
 guard CommandLine.arguments.count > 1 else {
-    print("Usage: airdrop <file>")
+    print("\(yellow)Usage: airdrop <file>\(reset)")
     exit(1)
 }
 
@@ -10,7 +15,7 @@ let filePath = CommandLine.arguments[1]
 let fileURL = URL(fileURLWithPath: filePath)
 
 guard FileManager.default.fileExists(atPath: filePath) else {
-    print("No such file or directory: \(filePath)")
+    print("\(yellow)No such file or directory: \(reset)\(filePath)")
     exit(1)
 }
 
@@ -24,14 +29,14 @@ class AirDropDelegate: NSObject, NSApplicationDelegate, NSSharingServiceDelegate
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard let service = NSSharingService(named: .sendViaAirDrop) else {
-            print("AirDrop is unavailable.")
+            print("\(red)AirDrop is unavailable. exit...\(reset)")
             NSApp.terminate(nil)
             return
         }
 
         service.delegate = self
         service.perform(withItems: [fileURL])
-        print("AirDrop transfer started. Follow instructions in the AirDrop window.")
+        print("\(green)AirDrop transfer started.\(reset)")
     }
 
     func sharingService(_ sharingService: NSSharingService, didShareItems items: [Any]) {
@@ -40,7 +45,7 @@ class AirDropDelegate: NSObject, NSApplicationDelegate, NSSharingServiceDelegate
     }
 
     func sharingService(_ sharingService: NSSharingService, didFailToShareItems items: [Any], error: Error) {
-        print("Error: \(error.localizedDescription)")
+        print("\(red)Error: \(reset) \(error.localizedDescription)")
         NSApp.terminate(nil)
     }
 
