@@ -22,7 +22,10 @@ swiftc main.swift -o airdrop -framework AppKit
 # Move the compiled binary to a directory in your PATH
 sudo mv airdrop /usr/local/bin
 
-# (Optional) Disable certain input methods if you encounter issues 
+# (Optional) Disable certain input methods if you encounter issues
+# such as console output like:
+#   2025-07-08 18:43:58.773 airdrop[28187:1118775] +[IMKClient subclass]: chose IMKClient_Legacy
+
 echo "export IMKInputEnabled=NO" >> ~/.bashrc
 source ~/.bashrc
 ```
